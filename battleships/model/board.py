@@ -13,7 +13,10 @@ class Board:
     def _check_ship_fits(self, new_ship, x, y):
         for ship_y in range(new_ship.height):
             for ship_x in range(new_ship.width):
-                if isinstance(self.cells[ship_y + y][ship_x + x], ship.ShipCell):
+                try:
+                    if isinstance(self.cells[ship_y + y][ship_x + x], ship.ShipCell):
+                        return False
+                except IndexError:
                     return False
         return True
 
@@ -27,7 +30,10 @@ class Board:
         self.ships.append(new_ship)
 
     def take_hit(self, x, y):
-        cell = self.cells[y][x]
+        try:
+            cell = self.cells[y][x]
+        except IndexError:
+            return constants.OUT_OF_BOUNDS
         if cell is None:
             return constants.MISS
         cell.take_hit()
@@ -36,3 +42,10 @@ class Board:
     @property
     def remaining_ships(self):
         return len([remaining_ship for remaining_ship in self.ships if not remaining_ship.is_destroyed])
+
+    def __str__(self):
+        return f'Board {self.width}x{self.height} ({len(self.ships)} ships)'
+
+    def __repr__(self):
+        return self.__str__()
+
