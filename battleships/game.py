@@ -25,7 +25,7 @@ class Game:
         return x, y
 
     def _input_board_dimensions(self):
-        s = self._input('Board dimensions: (Format X Y, e.g. A 4): ').split()
+        s = self._input('Board dimensions: (Format X Y, e.g. 3 C): ').split()
         x = int(s[0])
         y = ord(s[1].lower()) - 96
         return x, y
@@ -60,7 +60,7 @@ class Game:
             self.current_player, self.opposite_player = self.opposite_player, self.current_player
 
     def _input_ship_no(self):
-        s = self._input('Number of ships')
+        s = self._input('Number of ships per player: ')
         self.ships_no = int(s)
 
     def _input_player_ships(self, target_player):
@@ -109,6 +109,7 @@ class Game:
         while True:
             self._output('Player {name}\'s turn'.format(name=self.current_player.name))
             result = self._hit_opposite_player()
+            self._output(f'Result: {result}')
             self.game_status = self._get_game_status()
             if self.game_status != constants.IN_PROGRESS:
                 break
