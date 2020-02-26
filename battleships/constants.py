@@ -1,0 +1,6 @@
+HIT = 'hit'
+MISS = 'miss'
+OUT_OF_BOUNDS = 'out_of_bounds'
+VICTORY = 'victory'
+DRAW = 'draw'
+IN_PROGRESS = 'in_progress'
