@@ -16,7 +16,7 @@ class GameInputsTestCase(TestCase):
     @mock.patch.object(game.Game, '_input', side_effect=['5 E', '2', 'Q 1 1 A1 P 1 1 A1'])
     def test_game_setup_ships_do_not_fit(self, _input, _output):
         test_game = game.Game()
-        with self.assertRaisesRegexp(ValueError, 'The new ship does not fit'):
+        with self.assertRaisesRegex(ValueError, 'The new ship does not fit'):
             test_game.play()
 
     @mock.patch.object(game.Game, '_input', side_effect=[
@@ -31,8 +31,8 @@ class GameInputsTestCase(TestCase):
     def test_game_one_turn_victory(self, _input, _output):
         test_game = game.Game()
         test_game.play()
-        self.assertEquals(test_game.game_status, constants.VICTORY)
-        self.assertEquals(test_game.opposite_player.remaining_missiles, 99)
+        self.assertEqual(test_game.game_status, constants.VICTORY)
+        self.assertEqual(test_game.opposite_player.remaining_missiles, 99)
 
     @mock.patch.object(game.Game, '_input', side_effect=[
         '5 E', '2', 'Q 1 1 A1 P 1 1 B2', 'Q 1 1 A1 P 1 1 B2',
@@ -40,4 +40,4 @@ class GameInputsTestCase(TestCase):
     def test_game_draw(self, _input, _output):
         test_game = game.Game()
         test_game.play()
-        self.assertEquals(test_game.game_status, constants.DRAW)
+        self.assertEqual(test_game.game_status, constants.DRAW)
