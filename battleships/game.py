@@ -11,8 +11,11 @@ class GameClient:
         self.game_status = constants.IN_PROGRESS
 
     @staticmethod
-    def _input_coordinates(message=None):
-        s = input(message)
+    def _input(message=None):
+        return input(message)
+
+    def _input_coordinates(self, message=None):
+        s = self._input(message)
         x = int(s[1]) - 1
         y = ord(s[0]) - 97
         return x, y
@@ -32,6 +35,9 @@ class GameClient:
             remaining_missiles=99,
             board=board.Board(width=width, height=height)
         )
+        self._input_ship_no()
+        self._input_player_ships(player=self.current_player)
+        self._input_player_ships(player=self.opposite_player)
 
     def _get_game_status(self):
         if self.opposite_player.board.remaining_ships == 0:
@@ -73,9 +79,6 @@ class GameClient:
 
     def play(self):
         self._set_up_game()
-        self._input_ship_no()
-        self._input_player_ships(player=self.current_player)
-        self._input_player_ships(player=self.opposite_player)
 
         while True:
             print('Player {name}\'s turn'.format(name=self.current_player.name))
